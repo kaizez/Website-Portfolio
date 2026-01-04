@@ -73,6 +73,7 @@ def get_portfolio_data():
                 'title': achievement_title,
                 'date': os.getenv(f'ACHIEVEMENT_{i}_DATE', ''),
                 'description': os.getenv(f'ACHIEVEMENT_{i}_DESCRIPTION', ''),
+                'image_url': os.getenv(f'ACHIEVEMENT_{i}_IMAGE_URL', ''),
             }
             achievements.append(achievement)
 

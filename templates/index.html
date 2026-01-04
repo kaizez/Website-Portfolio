@@ -62,23 +62,59 @@
     <section id="about" class="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
-            <div class="about-grid">
+            <div class="about-content">
                 <div class="about-text">
                     <p class="intro">{{ data.about.intro }}</p>
                     <p>{{ data.about.paragraph_1 }}</p>
                     <p>{{ data.about.paragraph_2 }}</p>
-
-                    <h3 class="skills-title">Key Skills</h3>
-                    <div class="skills-grid">
-                        {% for skill in data.skills %}
-                        <div class="skill-card">
-                            <div class="skill-icon">{{ skill.icon }}</div>
-                            <h4>{{ skill.name }}</h4>
-                            <p>{{ skill.description }}</p>
+                </div>
+                <div class="about-visual">
+                    <div class="floating-card">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <div class="card-graphics">
+                                    <div class="security-icon">🔒</div>
+                                    <div class="code-lines">
+                                        <span class="code-line"></span>
+                                        <span class="code-line"></span>
+                                        <span class="code-line"></span>
+                                    </div>
+                                    <div class="geometric-shapes">
+                                        <div class="shape shape-circle"></div>
+                                        <div class="shape shape-square"></div>
+                                        <div class="shape shape-triangle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-face card-back">
+                                <div class="card-graphics">
+                                    <div class="security-icon">🛡️</div>
+                                    <div class="code-lines">
+                                        <span class="code-line"></span>
+                                        <span class="code-line"></span>
+                                        <span class="code-line"></span>
+                                    </div>
+                                    <div class="geometric-shapes">
+                                        <div class="shape shape-circle"></div>
+                                        <div class="shape shape-square"></div>
+                                        <div class="shape shape-triangle"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
+            </div>
+
+            <h3 class="skills-title">Key Skills</h3>
+            <div class="skills-grid">
+                {% for skill in data.skills %}
+                <div class="skill-card">
+                    <div class="skill-icon">{{ skill.icon }}</div>
+                    <h4>{{ skill.name }}</h4>
+                    <p>{{ skill.description }}</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -145,7 +181,13 @@
             <div class="achievements-grid">
                 {% for achievement in data.achievements %}
                 <div class="achievement-card">
+                    {% if achievement.image_url %}
+                    <div class="achievement-image">
+                        <img src="{{ achievement.image_url }}" alt="{{ achievement.title }}" loading="lazy">
+                    </div>
+                    {% else %}
                     <div class="achievement-icon">{{ achievement.icon }}</div>
+                    {% endif %}
                     <h3>{{ achievement.title }}</h3>
                     <p class="achievement-date">{{ achievement.date }}</p>
                     <p>{{ achievement.description }}</p>
