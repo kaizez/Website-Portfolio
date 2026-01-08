@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ data.personal.name }} | Cybersecurity Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -127,16 +128,15 @@
             <div class="projects-grid">
                 {% for project in data.projects %}
                 <div class="project-card" data-has-preview="{{ project.has_preview }}">
-                    {% if project.has_preview and project.live_url %}
+                    {% if project.has_preview and project.screenshot_path %}
                     <div class="project-preview-container">
                         <div class="project-preview-wrapper">
-                            <iframe
-                                src="{{ project.live_url }}"
+                            <img
+                                src="{{ url_for('static', filename=project.screenshot_path) }}"
+                                alt="{{ project.name }} preview"
                                 class="project-preview"
                                 loading="lazy"
-                                scrolling="no"
-                                sandbox="allow-same-origin allow-scripts"
-                            ></iframe>
+                            />
                         </div>
                         <div class="preview-overlay">
                             <span class="preview-hint">Hover to preview</span>
@@ -166,6 +166,9 @@
                                 <span class="link-icon">💻</span> Code →
                             </a>
                             {% endif %}
+                            <button class="project-link project-details-btn" onclick="openProjectModal({{ loop.index0 }})">
+                                <span class="link-icon">📖</span> View Details →
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -253,6 +256,63 @@
         </div>
     </section>
 
+    <!-- Project Details Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalProjectName"></h2>
+                <button class="modal-close" onclick="closeProjectModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalProjectType" class="project-tag"></div>
+
+                <div class="modal-section">
+                    <h3>Overview</h3>
+                    <p id="modalProjectDescription"></p>
+                </div>
+
+                <div id="modalDetailedSection" class="modal-section">
+                    <h3>About This Project</h3>
+                    <p id="modalDetailedDescription"></p>
+                </div>
+
+                <div id="modalRoleSection" class="modal-section">
+                    <h3>My Role</h3>
+                    <p id="modalRole"></p>
+                </div>
+
+                <div id="modalDurationSection" class="modal-section">
+                    <h3>Duration</h3>
+                    <p id="modalDuration"></p>
+                </div>
+
+                <div id="modalChallengesSection" class="modal-section">
+                    <h3>Challenges & Solutions</h3>
+                    <p id="modalChallenges"></p>
+                </div>
+
+                <div id="modalAchievementsSection" class="modal-section">
+                    <h3>Key Achievements</h3>
+                    <p id="modalAchievements"></p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Technologies Used</h3>
+                    <div id="modalTech" class="project-tech"></div>
+                </div>
+
+                <div class="modal-links">
+                    <a id="modalLiveLink" href="#" target="_blank" class="btn btn-primary" rel="noopener noreferrer" style="display: none;">
+                        <span class="link-icon">🔗</span> Visit Live Site
+                    </a>
+                    <a id="modalGithubLink" href="#" target="_blank" class="btn btn-outline" rel="noopener noreferrer" style="display: none;">
+                        <span class="link-icon">💻</span> View Code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -261,6 +321,10 @@
         </div>
     </footer>
 
+    <!-- Pass project data to JavaScript -->
+    <script>
+        const projectsData = {{ data.projects | tojson | safe }};
+    </script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

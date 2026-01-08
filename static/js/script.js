@@ -25,16 +25,20 @@ themeToggle.addEventListener('click', () => {
     updateThemeIcon(newTheme);
 });
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+// Smooth scrolling for navigation links (excluding modal links)
+document.querySelectorAll('a[href^="#"]:not(#modalLiveLink):not(#modalGithubLink)').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        const href = this.getAttribute('href');
+        // Only apply smooth scrolling if it's a valid anchor link (starts with #)
+        if (href && href.startsWith('#') && href.length > 1) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         }
     });
 });
@@ -278,3 +282,123 @@ techBadges.forEach(badge => {
 });
 
 // Removed dynamic glass effect for cleaner minimalism
+
+// ===== PROJECT MODAL FUNCTIONALITY =====
+// Open project modal
+function openProjectModal(projectIndex) {
+    const modal = document.getElementById('projectModal');
+    const project = projectsData[projectIndex];
+
+    if (!project || !modal) return;
+
+    // Populate modal with project data
+    document.getElementById('modalProjectName').textContent = project.name;
+    document.getElementById('modalProjectType').textContent = project.type;
+    document.getElementById('modalProjectDescription').textContent = project.description;
+
+    // Handle optional detailed fields
+    const detailedSection = document.getElementById('modalDetailedSection');
+    if (project.detailed_description) {
+        document.getElementById('modalDetailedDescription').textContent = project.detailed_description;
+        detailedSection.style.display = 'block';
+    } else {
+        detailedSection.style.display = 'none';
+    }
+
+    const roleSection = document.getElementById('modalRoleSection');
+    if (project.role) {
+        document.getElementById('modalRole').textContent = project.role;
+        roleSection.style.display = 'block';
+    } else {
+        roleSection.style.display = 'none';
+    }
+
+    const durationSection = document.getElementById('modalDurationSection');
+    if (project.duration) {
+        document.getElementById('modalDuration').textContent = project.duration;
+        durationSection.style.display = 'block';
+    } else {
+        durationSection.style.display = 'none';
+    }
+
+    const challengesSection = document.getElementById('modalChallengesSection');
+    if (project.challenges) {
+        document.getElementById('modalChallenges').textContent = project.challenges;
+        challengesSection.style.display = 'block';
+    } else {
+        challengesSection.style.display = 'none';
+    }
+
+    const achievementsSection = document.getElementById('modalAchievementsSection');
+    if (project.achievements) {
+        document.getElementById('modalAchievements').textContent = project.achievements;
+        achievementsSection.style.display = 'block';
+    } else {
+        achievementsSection.style.display = 'none';
+    }
+
+    // Populate technologies
+    const modalTech = document.getElementById('modalTech');
+    modalTech.innerHTML = '';
+    project.tech.forEach(tech => {
+        const badge = document.createElement('span');
+        badge.className = 'tech-badge';
+        badge.textContent = tech;
+        modalTech.appendChild(badge);
+    });
+
+    // Handle links
+    const liveLink = document.getElementById('modalLiveLink');
+    const githubLink = document.getElementById('modalGithubLink');
+
+    if (project.live_url) {
+        liveLink.href = project.live_url;
+        liveLink.style.display = 'inline-flex';
+    } else {
+        liveLink.style.display = 'none';
+    }
+
+    if (project.github_url) {
+        githubLink.href = project.github_url;
+        githubLink.style.display = 'inline-flex';
+    } else {
+        githubLink.style.display = 'none';
+    }
+
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close project modal
+function closeProjectModal() {
+    const modal = document.getElementById('projectModal');
+    if (!modal) return;
+
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Initialize modal event listeners when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('projectModal');
+
+    if (modal) {
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeProjectModal();
+            }
+        });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('projectModal');
+            if (modal && modal.classList.contains('active')) {
+                closeProjectModal();
+            }
+        }
+    });
+});

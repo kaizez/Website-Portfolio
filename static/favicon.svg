@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        .text { fill: #ffffff; }
+        .dot { fill: #0a84ff; }
+        .bg { fill: #0a0a0a; }
+      }
+      @media (prefers-color-scheme: light) {
+        .text { fill: #1d1d1f; }
+        .dot { fill: #0071e3; }
+        .bg { fill: #ffffff; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="100" height="100" rx="20"/>
+
+  <!-- Text -->
+  <text class="text" x="50" y="65" font-family="'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" font-size="48" font-weight="700" text-anchor="middle" letter-spacing="-2">WE</text>
+
+  <!-- Dot -->
+  <circle class="dot" cx="82" cy="60" r="6"/>
+</svg>

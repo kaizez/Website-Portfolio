@@ -60,6 +60,13 @@ def get_portfolio_data():
                 'live_url': os.getenv(f'PROJECT_{i}_LIVE_URL', ''),
                 'github_url': os.getenv(f'PROJECT_{i}_GITHUB_URL', ''),
                 'has_preview': os.getenv(f'PROJECT_{i}_HAS_PREVIEW', 'false').lower() == 'true',
+                'screenshot_path': os.getenv(f'PROJECT_{i}_SCREENSHOT_PATH', ''),
+                # Detailed information (optional)
+                'detailed_description': os.getenv(f'PROJECT_{i}_DETAILED_DESCRIPTION', ''),
+                'role': os.getenv(f'PROJECT_{i}_ROLE', ''),
+                'duration': os.getenv(f'PROJECT_{i}_DURATION', ''),
+                'challenges': os.getenv(f'PROJECT_{i}_CHALLENGES', ''),
+                'achievements': os.getenv(f'PROJECT_{i}_ACHIEVEMENTS', ''),
             }
             projects.append(project)
 
