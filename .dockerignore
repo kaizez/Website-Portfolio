@@ -1,0 +1,28 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Git
+.git/
+.gitignore
+
+# Environment files (should be provided at runtime)
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Images for documentation
+image.png
+image1.png
+README.md
+LICENSE
+
+# Claude
+.claude/
